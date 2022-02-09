@@ -53,7 +53,7 @@ function Login() {
             body: JSON.stringify(obj)
           };
 
-        fetch("http://192.168.88.24:8000/api/v1/room/login/", response)
+        fetch("https://greengardenhotel-backend.herokuapp.com/api/v1/room/login/", response)
         .then(res => {
             if(res.ok){
                 console.log(res.status);
