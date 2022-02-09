@@ -8,36 +8,15 @@ function Login() {
     const [pin, setPin] = useState('')
     const [roomNum, setRoomNum] = useState('')
 
-    const handleChangePin = (event) => {
-        setPin(event.target.value);
-      }   
-      
-     const handleChangeNum = (event) => {
-        setRoomNum(event.target.value);
-      }
-
-    const PinInputTag = () => {
-        return (
-            <input type='password' 
-            placeholder='PIN'
-            onChange={handleChangePin} 
-            value={pin}
-            />
-        )
-    }
-
+        const handleChangePin = (event) => {
+            setPin(event.target.value);
+          }   
+          
+         const handleChangeNum = (event) => {
+            setRoomNum(event.target.value);
+          }    
     
     let history = useHistory();
-    
-    const RoomInputTag = () => {
-        return (
-            <input type='text'
-             placeholder='Room number' 
-             onChange={handleChangeNum} 
-             value={roomNum}
-            />
-        )
-    }
 
     function handleClick() {
         history.push("/Home");
@@ -62,7 +41,6 @@ function Login() {
         //       //handle error
         //       console.log(error);
         //     });
-
         let obj = {
             username: roomNum,
             password: pin
@@ -102,11 +80,17 @@ console.log(response)
                 <h1>Sign-in</h1>
 
                 <form>
-                    <h5>PIN code</h5>
-                    <PinInputTag />
-
                     <h5>Room number</h5>
-                    <RoomInputTag />
+                    <input type='text'
+                        placeholder='Room number' 
+                        onChangeCapture={handleChangeNum} 
+                        value={roomNum}/>
+
+                    <h5>PIN code</h5>
+                    <input type='password' 
+                        placeholder='PIN'
+                        onChange={handleChangePin} 
+                        value={pin}/>
 
                     <button type='button' onClick={SendData} className='login__signInButton'>Sign In</button>
                 </form>

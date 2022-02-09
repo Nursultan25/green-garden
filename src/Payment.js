@@ -7,7 +7,7 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CurrencyFormat from "react-currency-format";
 import { getBasketTotal } from "./reducer";
 import axios from './axios';
-import { db } from "./firebase";
+import Cookies from 'js-cookie';
 
 function Payment() {
     const [{ basket, user }, dispatch] = useStateValue();
@@ -17,6 +17,8 @@ function Payment() {
     const [processing, setProcessing] = useState("");
     const [disabled, setDisabled] = useState(true);
 
+    const csrftoken = Cookies.get('csrftoken');
+
 const SendData = () => {
     let obj = {
             id: basket.map(item => item.id)
@@ -24,10 +26,17 @@ const SendData = () => {
     let response = {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
         },
         body: JSON.stringify(obj)
       };
+
+      localStorage.setItem('session', JSON.stringify(response));
+
+      function getSession(){
+        return JSON.parse(localStorage.getItem('session'))
+       }
 
     fetch("http://192.168.88.24:8000/api/v1/room/menu/", response)
     .then(res => {
